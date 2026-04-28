@@ -107,6 +107,8 @@ A função calcular_kpis é responsável por centralizar o cálculo dos principa
 ## `charts.py` 
 Camada isolada dedicada exclusivamente à criação de visualizações dinâmicas com Plotly.
 
+<img width="1905" height="879" alt="Image" src="https://github.com/user-attachments/assets/1016814d-9aca-4c63-922b-c1553adacc87" />
+
 * **`app.py`**: Orquestrador principal que gerencia o layout Dash, componentes Bootstrap e os callbacks de interatividade.
 
 ---
