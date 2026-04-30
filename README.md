@@ -154,7 +154,7 @@ def criar_graficos(df: pd.DataFrame):
 ```
 Responsável por gerar todos os gráficos do dashboard de forma dinâmica, aplicando validações de dados, filtros de outliers e tratamento para cenários com dados insuficientes. A função garante consistência visual entre os gráficos e evita análises enganosas, exibindo mensagens apropriadas quando os dados não atendem aos critérios mínimos.
 
-📊 Exemplos de visualizações geradas:
+#### 📊 Exemplos de visualizações geradas:
 
 ---
 
