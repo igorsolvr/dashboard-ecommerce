@@ -100,7 +100,7 @@ def calcular_kpis(df: pd.DataFrame) -> dict:
 
     return {...}
 ```
-*_`A função calcular_kpis é responsável por centralizar o cálculo dos principais indicadores de desempenho do dashboard a partir de um DataFrame. Inicialmente, ela verifica se o conjunto de dados está vazio, retornando valores zerados para evitar falhas na aplicação. Em seguida, calcula métricas como total de produtos, preço médio, total de vendas e nota média, considerando possíveis ausências de colunas. Por fim, aplica validações e conversões para garantir que os resultados sejam consistentes e seguros para uso nas visualizações do dashboard.`_*
+A função calcular_kpis é responsável por centralizar o cálculo dos principais indicadores de desempenho do dashboard a partir de um DataFrame. Inicialmente, ela verifica se o conjunto de dados está vazio, retornando valores zerados para evitar falhas na aplicação. Em seguida, calcula métricas como total de produtos, preço médio, total de vendas e nota média, considerando possíveis ausências de colunas. Por fim, aplica validações e conversões para garantir que os resultados sejam consistentes e seguros para uso nas visualizações do dashboard.
 
 ---
 
