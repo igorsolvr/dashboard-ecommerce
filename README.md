@@ -54,7 +54,7 @@ O projeto está divido em 4 módulos principais:
 ### `data_loader.py`
 Responsável pelo carregamento, padronização e limpeza dos dados (*Data Wrangling*).
 
-**Padronização de dados:**
+* #### Padronização de dados:
 ```python
 # Material
 if "Material" in df.columns:
@@ -70,7 +70,7 @@ if "Marca" in df.columns:
         .str.title()
     )        
 ```
-**Tratamento de Erros:**
+* #### Tratamento de Erros:
 ```python
 try:
     df = pd.read_csv(caminho_arquivo)
@@ -84,7 +84,7 @@ Esse trecho evita que a aplicação quebre em caso de falha no carregamento dos 
 
 ---
 ### `kpis.py`
-Contém a lógica de negócio para cálculo automático de indicadores de desempenho.
+A função centraliza o cálculo dos principais indicadores do dashboard, tratando cenários de dados vazios e possíveis ausências de colunas para garantir resultados consistentes nas visualizações.
 
 ```python
 def calcular_kpis(df: pd.DataFrame) -> dict:
@@ -104,12 +104,117 @@ A função calcular_kpis é responsável por centralizar o cálculo dos principa
 
 ---
 
-## `charts.py` 
-Camada isolada dedicada exclusivamente à criação de visualizações dinâmicas com Plotly.
+### `charts.py` 
+Este módulo concentra a lógica analítica e visual dos gráficos, garantindo que apenas dados válidos e representativos sejam exibidos.
 
-<img width="1905" height="879" alt="Image" src="https://github.com/user-attachments/assets/1016814d-9aca-4c63-922b-c1553adacc87" />
+* #### Função `tem_dados_suficientes`
+```python
+def tem_dados_suficientes(df: pd.DataFrame, minimo: int = MIN_DADOS_ESTATISTICOS) -> bool:
+    return len(df) >= minimo
+```
+Verifica se o conjunto de dados possui volume mínimo para gerar análises confiáveis, evitando a criação de gráficos com baixa relevância estatística.
 
-* **`app.py`**: Orquestrador principal que gerencia o layout Dash, componentes Bootstrap e os callbacks de interatividade.
+* #### Função `tem_variedade_suficiente`
+```python
+def tem_variedade_suficiente(df: pd.DataFrame, colunas: list[str], minimo_valores_unicos: int = 2) -> bool:
+    for coluna in colunas:
+    ...
+    return True
+```
+Garante que as variáveis analisadas possuam diversidade suficiente de valores, evitando a geração de gráficos e análises com dados constantes ou pouco representativos.
+
+* #### Funções `criar_card_grafico` e `criar_card_kpi`
+```python
+def criar_card_grafico(...):
+    ...
+
+def criar_card_kpi(...):
+    ...
+```
+Funções responsáveis por encapsular gráficos e indicadores em componentes reutilizáveis, garantindo padronização visual e organização do layout do dashboard.
+
+* #### Função `figura_vazia`
+```python
+def figura_vazia(titulo="Sem dados disponíveis", mensagem="Tente ajustar os filtros"):
+
+    fig = px.scatter()
+    ...
+    return fig
+```
+Cria um estado visual para situações em que não há dados suficientes para gerar um gráfico, exibindo uma mensagem centralizada e amigável ao usuário. Essa abordagem melhora a experiência de uso e evita visualizações vazias ou enganosas.
+
+* #### Função `criar_graficos`
+```python
+def criar_graficos(df: pd.DataFrame):
+    
+    if df.empty:
+        return [figura_vazia()] * 6
+    ...
+    return fig1, fig2, fig3, fig4, fig5, fig6
+```
+Responsável por gerar todos os gráficos do dashboard de forma dinâmica, aplicando validações de dados, filtros de outliers e tratamento para cenários com dados insuficientes. A função garante consistência visual entre os gráficos e evita análises enganosas, exibindo mensagens apropriadas quando os dados não atendem aos critérios mínimos.
+
+📊 Exemplos de visualizações geradas:
+
+---
+
+### `app.py`
+
+Orquestrador principal que gerencia o layout Dash, componentes Bootstrap e os callbacks de interatividade.
+
+* #### Inicialização da aplicação e carregamento dos dados:
+```python
+DADOS_CSV = "ecommerce_estatistica.csv"
+
+app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
+
+df_global = preparar_dados(DADOS_CSV)
+```
+Esse trecho inicializa o aplicativo Dash com um tema Bootstrap e carrega os dados apenas uma vez na inicialização, evitando leituras repetidas do arquivo CSV.
+
+* #### Filtro dinâmico por marca:
+```python
+if df_global.empty or "Marca" not in df_global.columns:
+    marcas_ops = [{"label": "Sem dados", "value": "Sem dados"}]
+    valor_inicial_marca = "Sem dados"
+else:
+    marcas_ops = [{"label": "Todas as Marcas", "value": "Todas"}] + [
+        {"label": marca, "value": marca}
+        for marca in sorted(df_global["Marca"].dropna().unique())
+    ]
+    valor_inicial_marca = "Todas"
+```
+Cria dinamicamente as opções do filtro de marcas a partir dos dados disponíveis, com tratamento para cenários em que o dataset esteja vazio ou sem a coluna necessária.
+
+* #### Estrutura do layout:
+```python
+app.layout = dbc.Container(
+    [
+        dbc.Row([...]),  # Título
+        dbc.Row([...]),  # Filtro
+        dbc.Row([...]),  # KPIs
+        dbc.Row([...]),  # Gráficos
+    ],
+    fluid=True,
+    style={"backgroundColor": "#f8f9fa"}
+)
+```
+Organiza o dashboard em uma estrutura responsiva usando Container, Row e Col do Bootstrap, separando título, filtro, indicadores e gráficos.
+
+* #### Callback de atualização:
+```python
+@app.callback(
+    [Output(f"graf{i}", "figure") for i in range(1, 7)] + [...],
+    Input("filtro-marca", "value")
+)
+def update_dashboard(marca):
+    ...
+    figuras = criar_graficos(df_filtrado)
+    kpis = calcular_kpis(df_filtrado)
+
+    return list(figuras) + [...]
+```
+Atualiza gráficos e KPIs automaticamente com base na marca selecionada, conectando a interação do usuário às funções responsáveis pelos cálculos e visualizações.
 
 ---
 
@@ -124,8 +229,9 @@ O dashboard oferece uma visão 360º da operação de vendas:
 
 
 ## Insights Extraídos
-* Identificação de Outliers: O uso de filtros por quantil (0.99) permitiu identificar produtos de alto valor que mantêm volume de vendas consistente.
 
-* Prova Social: Observou-se uma correlação positiva entre o número de avaliações e a quantidade vendida, reforçando a importância do feedback do cliente.
+* **Identificação de Outliers:** O uso de filtros por quantil (0.99) permitiu identificar produtos de alto valor que mantêm volume de vendas consistente.
 
-* Eficiência de Catálogo: A análise do mix de materiais revelou oportunidades de otimização de estoque baseada na preferência histórica de consumo.
+* **Prova Social:** Observou-se uma correlação positiva entre o número de avaliações e a quantidade vendida, reforçando a importância do feedback do cliente.
+
+* **Eficiência de Catálogo:** A análise do mix de materiais revelou oportunidades de otimização de estoque baseada na preferência histórica de consumo.
