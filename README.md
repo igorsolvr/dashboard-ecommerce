@@ -257,8 +257,19 @@ O dashboard oferece uma visão 360º da operação de vendas:
 
 ## Insights Extraídos
 
-* **Identificação de Outliers:** O uso de filtros por quantil (0.99) permitiu identificar produtos de alto valor que mantêm volume de vendas consistente.
+**1. Composição e Preços**
+* **Dominância do Algodão:** Metade do seu mix de materiais (50,4%) é composta por algodão. Somado ao poliéster (24,1%), esses dois materiais representam quase 75% da sua oferta, indicando um foco em tecidos tradicionais e de alta rotatividade.
 
-* **Prova Social:** Observou-se uma correlação positiva entre o número de avaliações e a quantidade vendida, reforçando a importância do feedback do cliente.
+* **Concentração de Preços:** O histograma mostra que a maior parte dos seus 295 produtos está na faixa de R$ 50 a R$ 80. Existe uma queda nítida após os R$ 200, mostrando que o seu negócio é focado no mercado de massa ou "entry-level", com poucos itens de luxo ou ticket muito alto.
 
-* **Eficiência de Catálogo:** A análise do mix de materiais revelou oportunidades de otimização de estoque baseada na preferência histórica de consumo.
+* **Ticket Médio:** O valor médio de R$ 130,84 é superior à faixa de maior frequência (R$ 50-80), o que sugere que os produtos mais caros, embora em menor quantidade, estão "puxando" a média para cima.
+
+**2. Desempenho de Vendas e Engajamento**
+* **Vendas vs. Avaliações:** O gráfico de dispersão com linha de tendência mostra uma correlação positiva forte. Isso indica que, quanto mais um produto vende, mais avaliações ele recebe. Isso é um sinal saudável de engajamento orgânico.
+
+* **Anomalias de Venda (Outliers):** No gráfico "Preço vs Vendas", notamos produtos específicos que atingiram 50k unidades vendidas em diferentes faixas de preço (um próximo a R$ 40, outro a R$ 200 e outro a R$ 240). Esses itens são seus "best-sellers" e merecem uma análise profunda: o que faz um produto de R$ 240 vender tanto quanto um de R$ 40? Pode ser exclusividade de marca ou uma necessidade específica de mercado.
+
+**3. Qualidade e Satisfação**
+* **Alta Aprovação:** A nota média de 4,48 é excelente. O gráfico de densidade mostra que a grande massa de produtos está concentrada entre as notas 4,0 e 5,0.
+
+* **Baixo Risco:** Há pouquíssima densidade abaixo de 3,5, indicando que você não tem problemas críticos de qualidade ou de expectativa frustrada com os clientes na maioria do catálogo.
