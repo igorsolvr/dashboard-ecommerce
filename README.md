@@ -155,6 +155,23 @@ def criar_graficos(df: pd.DataFrame):
 Responsável por gerar todos os gráficos do dashboard de forma dinâmica, aplicando validações de dados, filtros de outliers e tratamento para cenários com dados insuficientes. A função garante consistência visual entre os gráficos e evita análises enganosas, exibindo mensagens apropriadas quando os dados não atendem aos critérios mínimos.
 
 #### 📊 Exemplos de visualizações geradas:
+**Distribuição de Preços**
+<img width="965" height="554" alt="Image" src="https://github.com/user-attachments/assets/10047c96-a15a-4697-b6f4-b68d6003661d" />
+
+**Preço vs Vendas**
+<img width="965" height="554" alt="Image" src="https://github.com/user-attachments/assets/cc86a78b-e9c8-45ad-82f7-87511508c999" />
+
+**Distribuição de produtos por marca**
+<img width="1902" height="540" alt="Image" src="https://github.com/user-attachments/assets/77171961-d5e4-4cc1-966b-6c67b3dbba90" />
+
+**Mix de materiais**
+<img width="1066" height="911" alt="Image" src="https://github.com/user-attachments/assets/8237fd4b-fdc9-4231-b19b-34a32db7e7e4" />
+
+**Concentração de Notas dos Produtos**
+<img width="1066" height="911" alt="Image" src="https://github.com/user-attachments/assets/601facee-e7c8-4509-a8d0-3c59146d6456" />
+
+**Vendas vs Avaliações**
+<img width="1066" height="911" alt="Image" src="https://github.com/user-attachments/assets/112526d3-8ee5-4343-bcbf-352a1a693efe" />
 
 ---
 
